@@ -3,7 +3,7 @@
 These tests deliberately cover only ordinary examples. They show how pytest works,
 but they are not a sufficient test suite for the specification in SPECIFICATION.md.
 """
-
+import pytest
 from weather import (
     average_temperature,
     filter_by_temperature,
