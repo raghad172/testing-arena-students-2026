@@ -12,14 +12,38 @@ from weather import (
     parse_time,
 )
 
+def test_parse_time_edge_cases():
 
-def test_parse_time_regular_time():
-    assert parse_time("14:21") == 861
+    assert parse_time("00:00") == 0
+    assert parse_time("23:59") == 1439
+
+def test_parse_time_invalid_format():
+
+    with pytest.raises(ValueError):
+        parse_time("1421")
+    with pytest.raises(ValueError):
+        parse_time("14:21:00")
+
+def test_parse_time_non_numeric():
+
+    with pytest.raises(ValueError):
+        parse_time("14:ab")
+    with pytest.raises(ValueError):
+        parse_time("ab:21")
+
+def test_parse_time_out_of_range():
+ 
+    with pytest.raises(ValueError):
+        parse_time("24:00")  
+    with pytest.raises(ValueError):
+        parse_time("-1:00")
+    with pytest.raises(ValueError):
+        parse_time("12:60")  
 
 
 def test_parse_measurement_regular_line():
     assert parse_measurement("Köln;14:21;21.7") == ("Köln", 861, 21.7)
-
+    
 
 def test_filter_by_temperature_regular_values():
     measurements = [
